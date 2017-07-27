@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <link rel = "stylesheet" href="style.css">
+        <title>CabsOnline Booking System</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript">
+        // Create the XMLHttpRequest object
+         var xmlHttp = new XMLHttpRequest();   
+         function processBooking(){
+        // Get the value from the form
+         var url = "bookingProcess.php";
+         var customerName = document.getElementById("customerName").value;
+         var contactPhone = document.getElementById("contactPhone").value;
+         var unitNum = document.getElementById("unitNum").value;
+         var streetNum = document.getElementById("street_number").value;
+         var streetName = document.getElementById("route").value;
+         var suburb = document.getElementById("sublocality_level_1").value;
+         var city = document.getElementById("locality").value;
+         var desSuburb = document.getElementById("desSuburb").value;
+         var date = document.getElementById("date").value;
+         var time = document.getElementById("time").value;
+         var passNum = document.getElementById("passNum").value;
+         //get the unique reference number
+         var referenceNum = reference();
+         var vars = "&customerName="+customerName+"&contactPhone="+contactPhone + "&unitNum=" + unitNum + "&streetNum=" + streetNum + "&streetName=" + streetName +"&suburb=" + suburb + "&city="+ city + "&desSuburb=" + desSuburb + "&date=" + date + "&time=" + time + "&passNum=" + passNum + "&referenceNum=" +encodeURIComponent(referenceNum); 
+         xmlHttp.open("POST", url, true);
+         // Set content type header information for sending url encoded variables in the request
+         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+         // Access the onreadystatechange event for the XMLHttpRequest object
+         xmlHttp.onreadystatechange = function() {
+         if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            var return_data = xmlHttp.responseText;
+            document.getElementById("status").innerHTML = return_data;
+        }
+    }
+    
+    xmlHttp.send(vars); 
+}
+//Create the unique reference for each booking
+function reference(){
+    var currentTime = new Date();
+    var contactPhone = document.getElementById("contactPhone").value;
+    var referenceNum = currentTime.getHours()+""+currentTime.getMinutes()+""+contactPhone.substr(0,7);
+    return referenceNum;
+}
+        </script>
+         <!--change background -->
+        <style type="text/css">
+            body{
+                background:url(TAXI.jpg) no-repeat; 
+            }
+            p{
+                font-size:20px;
+            }
+        </style>
+    </head>
+   
+    <body class = "centre">
+        <h1 class = "wordCentre">CabsOnline Booking System</h1>
+        <table id="address" class = "tableLayout" background = "background.jpg">
+            <tr><td><label class = "headFont">Customer Details:</label></td></tr>
+            <tr><td></td></tr>
+             <!--Customer Information-->
+            <tr><td><label class = "text">Customer Name: </label></td><td><input id="customerName" name="customerName" type="text" placeholder="Enter your name"></td><tr>
+            <td></td><td></td><td></td><td></td><tr></tr><tr>
+            <tr><td><label class = "text">Contact Phone:</label></td><td><input id="contactPhone" name="contactPhone" type="text"  maxlength= "10" placeholder="Enter your contact phone"></td></tr>
+            <tr><td></td></tr><tr><td></td></tr>
+            <tr><td><label class = "headFont">Pick-Up Details:</label></td></tr>
+            <tr><td></td></tr>
+            <!--Address Information-->
+            <div id="locationField">
+            <tr><td><label class = "text">Pick Up Address: </label></td><td>
+            <input id="autocomplete" placeholder="Enter your address"
+             onFocus="geolocate()" type="text"></input>
+            </div>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Unit Number(if applicable): </label></td><td><input id="unitNum" type="text" name="unitNum" type="number" placeholder="Enter the unit number"></td></tr>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Street Number: </label>
+            <td ><input class="field" type="text" id="street_number"
+            placeholder="Enter the street number" disabled="true"></input></td>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Street Name: </label>
+            <td><input class="field" type="text" id="route" placeholder="Enter the street name" disabled="true"></input></td>
+            </tr>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Suburb: </label>
+        <td><input class="field" type="text" id="sublocality_level_1" placeholder="Enter your suburb name" disabled="true"></input></td>
+      </tr>
+            <tr><tr><tr><tr>
+      <tr>
+            <tr><td><label class = "text">City: </label>
+            <td><input class="field" type="text" id="locality" placeholder="Enter the city name" disabled="true"></input></td>
+      </tr>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "headFont">Destination Details:</label></td></tr>
+            <tr><tr><tr><tr>
+            <!--Destination Information -->
+            <tr><td><label class = "text">Destination Suburb:</label></td><td><input id="desSuburb" name="desSuburb" type="text" placeholder="Enter your destination suburb"></td></tr>
+            <tr><tr><tr><tr>
+	    <tr><td><label class = "headFont">Pick Up Details:</label></td></tr>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Pick-Up Date:</label></td><td><input id="date" name="date" type="date" ></td></tr>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Pick-Up Time</label></td><td><input id="time" name="time" type="text" placeholder="00:00"></td></tr>
+            <tr><tr><tr><tr>
+            <tr><td><label class = "text">Number of Passengers</label></td><td><select id = "passNum"><option value="1" selected="selected">1 </option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option></select></td></tr>
+            <tr><td><input name="submit" type="submit" value="submit" onclick="processBooking();"></td></tr>
+            <tr><td><a class = "hyperlink" href="admin.htm">Go to Admin</a></td></tr>
+        </table>
+        <div id="status" class = "showCentre"></div>
+        <!-- Google Map Api -->
+        <script>
+        var placeSearch, autocomplete;
+        var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        sublocality_level_1: 'long_name'
+      };
+
+        function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+      }
+
+        function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+          document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC411YohFsrWeCKoIREQgocUlgsiiVailE&libraries=places&callback=initAutocomplete" async defer></script>
+    </body>
+</html>

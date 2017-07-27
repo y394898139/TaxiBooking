@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <link rel = "stylesheet" href="style.css">
+        <title>CabsOnline System Administration</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--connect to booking javascript -->
+        <script type="text/javascript" src="booking.js"></script>
+        <!--connect to adminProcrss javascript -->
+        <script type="text/javascript" src="adminProcrss.js"></script>
+        <!--change the background -->
+        <style type="text/css">
+            body{
+                background:url(admin.jpg);
+            }
+            p{
+                font-size:20px;
+            }
+            h1{
+                color:Orchid;
+            }
+        </style>
+    </head>
+    <body class ="centre">
+        <h1 class = "wordCentre">CabsOnline Administration</h1>
+        <HR>
+        <h3 style="color:oldlace;">1. Click the button, and the “unsigned” booking requests with a pick-up time within 2 hours from now only will be displayed. </h3>
+        <form method ="post" action ="processAdmin.php">
+             <!--create request -->
+            <p style="color:oldlace;">Click the button to view the request</p>
+            <input name ="submit" type="button" onclick="getData('processAdmin.php', 'targetDiv')" value ="view request">      
+            <br/><br/>
+            <div id ="targetDiv"></div>
+        </form>
+        <form method ="post" action ="changeStatus.php">
+            <h3 style="color:oldlace;">2.Enter a reference number to assign the booking</p>
+            <label style="color:oldlace;">Assign: </label><input type="text" name="referenceNum">
+            <input  name="submit" type = "button" onClick = "getDataNum('changeStatus.php', 'Div', referenceNum.value)" value = "Assign">
+            <div id="Div">
+            </div>
+        </form>
+        <p><a class = "hyperlink" href="booking.htm">Go to Booking page.</a></p>
+    </body>
+</html>

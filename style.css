@@ -1,0 +1,75 @@
+.headFont{
+    font-size:35px;
+    color: darkred;
+    font-weight: bold;
+}
+
+.text{
+    font-size:20px;
+    font-weight: bold;
+    color:oldlace;
+}
+
+.tableLayout{   
+    margin:auto;
+    table-layout: fixed;
+    text-align: left;
+}
+
+.wordCentre{ 
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    color: lightsteelblue;
+}
+
+.showCentre{
+    text-align: center;
+    font-size: 20px;
+}
+
+.hyperlink{
+    font-size: 30px;
+    color: brown;
+     font-weight:bold;
+}
+
+.centre{
+    
+    text-align: center;
+    font-size: large;
+
+}
+
+.requestTableLayout{
+    margin:auto;
+    table-layout: fixed;
+    text-align: left;
+    border-spacing: 0px;
+    border:2px solid saddlebrown;
+    font-weight: bold;
+    text-align: center;
+}
+
+input[type=text],
+input[type=date]{
+    border:0.2;
+    width:300px;
+    height:30px;
+    font-size:20px;
+    padding:0 2px;
+    line-height:30px;
+}
+
+input[type=submit],
+input[type=button]{
+    margin-top: 20px;
+    height: 40px;
+    width: 140px;
+    font-size: 20px;
+    background-color: oldlace; 
+    color: black;
+    font-weight: bold; 
+    border: 2px solid #008CBA;
+}
+
